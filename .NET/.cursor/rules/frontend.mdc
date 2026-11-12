@@ -1,0 +1,18 @@
+---
+description: Convenções do front-end web da demonstração Gestcom
+globs:
+  - "web/**/*.ts"
+  - "web/**/*.tsx"
+  - "web/**/*.css"
+---
+
+# Front-end da migração Gestcom
+
+- As telas em `web/` espelham o menu do Visual FoxPro: Menu (`menu.prg`), Cadastro de produtos (`cad_produtos.prg`), Inclusão de pedido (`ped_inclui.prg` e rotinas `spc_` / `trg_`) e Sugestão de reposição (`rel_reposicao.prg`).
+- Textos da interface em português do Brasil. Valores em `pt-BR` (R$ 298,80).
+- O front **não recalcula** desconto, ICMS, CFOP, quebra nem reposição. Esses números vêm da API, que é a fonte da paridade com o legado.
+- Cada tela leva o componente `NotaLegado`, citando o `.prg` que ela substitui.
+- Chamadas HTTP ficam em `web/src/api.ts`, contra `VITE_API_URL` ou `http://localhost:5088`. Tratar falha de rede com a orientação de subir a API.
+- CSS simples em `web/src/index.css`. Não adicionar biblioteca de UI pesada (Material, Ant, Bootstrap) nesta demo.
+- Componentes funcionais e TypeScript. Tipos em `web/src/types.ts`, alinhados aos DTOs camelCase da API.
+- Não versionar `node_modules/` nem `dist/`.

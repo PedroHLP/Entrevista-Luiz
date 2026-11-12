@@ -1,0 +1,22 @@
+---
+description: Checklist de revisão de código gerado por IA
+globs:
+  - "**/*.cs"
+---
+
+# Revisão de código gerado por IA
+
+Antes de aceitar um trecho gerado por IA, conferir:
+
+1. O arredondamento é `AwayFromZero`? O teste da água (1,125 → 1,13) ainda passa?
+2. O desconto de faixa está truncado (`Trunca2`) e não arredondado?
+3. `RoundGestcom` (+0.00001) não foi aplicado no ICMS?
+4. O desconto de funcionário roda depois do ICMS e não o altera?
+5. A quebra de NCM 2202 está na baixa, não na validação de estoque?
+6. Sugestão de reposição usa o saldo já baixado e ignora `ESTMIN = 0`?
+7. Nomes de tabela/coluna continuam os do legado?
+8. Não vazou regra de negócio para Controller, DbContext ou CSV?
+9. Exceção de estoque insuficiente não baixa nada e não gera sugestão?
+10. A alteração está amarrada a um cenário BDD ou a um caso de `paridade-legado.json`?
+
+Se a IA “corrigir” um comportamento estranho do legado, a correção só entra com decisão explícita em `docs/decisoes.md` e com o teste de paridade atualizado (legado vs. desejado).

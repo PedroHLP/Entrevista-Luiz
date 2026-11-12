@@ -1,0 +1,307 @@
+{
+  "origem": "Valores capturados a partir das regras do legado Gestcom (Visual FoxPro 9). Cada caso cita o .prg de origem. Os totais foram conferidos item a item com RoundGestcom, Trunca2 e ROUND de ICMS.",
+  "empresaUf": "SP",
+  "casos": [
+    {
+      "id": "PED-001",
+      "descricao": "Varejista SP, 12 arroz: faixa de 10% e ICMS 18%.",
+      "fontes": [
+        "funcoes.prg / PercDescontoFaixa",
+        "funcoes.prg / RoundGestcom",
+        "spc_calc_icms.prg"
+      ],
+      "cliente": "0001",
+      "itens": [
+        {
+          "codigoProduto": "0001",
+          "quantidade": 12
+        }
+      ],
+      "esperado": {
+        "cfop": "5102",
+        "valorBruto": 298.8,
+        "valorDesconto": 29.88,
+        "valorDescontoFuncionario": 0,
+        "valorIcms": 48.41,
+        "valorTotal": 268.92,
+        "itens": [
+          {
+            "item": 1,
+            "codigoProduto": "0001",
+            "percentualDesconto": 10,
+            "valorDesconto": 29.88,
+            "valorItem": 268.92,
+            "aliquotaIcms": 18,
+            "valorIcms": 48.41
+          }
+        ]
+      }
+    },
+    {
+      "id": "PED-002",
+      "descricao": "Varejista PR, 6 pães: desconto truncado (2,397 → 2,39) e ICMS reduzido 7% (NCM 1905). CFOP continua 6102.",
+      "fontes": [
+        "funcoes.prg / Trunca2",
+        "spc_calc_icms.prg (circular 14/2012)"
+      ],
+      "cliente": "0002",
+      "itens": [
+        {
+          "codigoProduto": "0003",
+          "quantidade": 6
+        }
+      ],
+      "esperado": {
+        "cfop": "6102",
+        "valorBruto": 47.94,
+        "valorDesconto": 2.39,
+        "valorDescontoFuncionario": 0,
+        "valorIcms": 3.19,
+        "valorTotal": 45.55,
+        "itens": [
+          {
+            "item": 1,
+            "codigoProduto": "0003",
+            "percentualDesconto": 5,
+            "valorDesconto": 2.39,
+            "valorItem": 45.55,
+            "aliquotaIcms": 7,
+            "valorIcms": 3.19
+          }
+        ]
+      }
+    },
+    {
+      "id": "PED-003",
+      "descricao": "Funcionário SP, 4 cafés: 5% no cabeçalho; ICMS permanece sobre 67,60 (12,17), não sobre 64,22.",
+      "fontes": [
+        "spc_desc_funcionario.prg"
+      ],
+      "cliente": "0004",
+      "itens": [
+        {
+          "codigoProduto": "0005",
+          "quantidade": 4
+        }
+      ],
+      "esperado": {
+        "cfop": "5102",
+        "valorBruto": 67.6,
+        "valorDesconto": 3.38,
+        "valorDescontoFuncionario": 3.38,
+        "valorIcms": 12.17,
+        "valorTotal": 64.22,
+        "itens": [
+          {
+            "item": 1,
+            "codigoProduto": "0005",
+            "percentualDesconto": 0,
+            "valorDesconto": 0,
+            "valorItem": 67.6,
+            "aliquotaIcms": 18,
+            "valorIcms": 12.17
+          }
+        ]
+      }
+    },
+    {
+      "id": "PED-004",
+      "descricao": "Funcionário SP, 6 pães: subtotal 47,94 abaixo do piso de 50; sem desconto extra. ICMS 7%.",
+      "fontes": [
+        "spc_desc_funcionario.prg",
+        "spc_calc_icms.prg"
+      ],
+      "cliente": "0004",
+      "itens": [
+        {
+          "codigoProduto": "0003",
+          "quantidade": 6
+        }
+      ],
+      "esperado": {
+        "cfop": "5102",
+        "valorBruto": 47.94,
+        "valorDesconto": 0,
+        "valorDescontoFuncionario": 0,
+        "valorIcms": 3.36,
+        "valorTotal": 47.94,
+        "itens": [
+          {
+            "item": 1,
+            "codigoProduto": "0003",
+            "percentualDesconto": 0,
+            "valorDesconto": 0,
+            "valorItem": 47.94,
+            "aliquotaIcms": 7,
+            "valorIcms": 3.36
+          }
+        ]
+      }
+    },
+    {
+      "id": "PED-005",
+      "descricao": "Consumidor SP, 1 água: ICMS 1,125 arredondado para 1,13 (AwayFromZero), e não 1,12 (ToEven).",
+      "fontes": [
+        "spc_calc_icms.prg",
+        "funcoes.prg / ROUND do VFP"
+      ],
+      "cliente": "0003",
+      "itens": [
+        {
+          "codigoProduto": "0006",
+          "quantidade": 1
+        }
+      ],
+      "esperado": {
+        "cfop": "5102",
+        "valorBruto": 6.25,
+        "valorDesconto": 0,
+        "valorDescontoFuncionario": 0,
+        "valorIcms": 1.13,
+        "valorTotal": 6.25,
+        "itens": [
+          {
+            "item": 1,
+            "codigoProduto": "0006",
+            "percentualDesconto": 0,
+            "valorDesconto": 0,
+            "valorItem": 6.25,
+            "aliquotaIcms": 18,
+            "valorIcms": 1.13
+          }
+        ]
+      }
+    },
+    {
+      "id": "PED-006",
+      "descricao": "Consumidor SP, 5 refrigerantes: totais sem desconto. A quebra e a reposição são conferidas no bloco de estoque.",
+      "fontes": [
+        "ped_inclui.prg",
+        "trg_baixa_estoque.prg"
+      ],
+      "cliente": "0003",
+      "itens": [
+        {
+          "codigoProduto": "0004",
+          "quantidade": 5
+        }
+      ],
+      "esperado": {
+        "cfop": "5102",
+        "valorBruto": 32.5,
+        "valorDesconto": 0,
+        "valorDescontoFuncionario": 0,
+        "valorIcms": 5.85,
+        "valorTotal": 32.5,
+        "itens": [
+          {
+            "item": 1,
+            "codigoProduto": "0004",
+            "percentualDesconto": 0,
+            "valorDesconto": 0,
+            "valorItem": 32.5,
+            "aliquotaIcms": 18,
+            "valorIcms": 5.85
+          }
+        ]
+      },
+      "estoque": {
+        "codigoProduto": "0004",
+        "estoqueInicial": 18,
+        "quantidadeVendida": 5,
+        "estoqueFinal": 12,
+        "aplicouQuebra": true,
+        "quantidadeSugerida": 36
+      }
+    },
+    {
+      "id": "PED-007",
+      "descricao": "Consumidor SP, 18 refrigerantes (estoque inteiro): validação passa, quebra deixa saldo em -1, sugestão 49.",
+      "fontes": [
+        "ped_inclui.prg (validação antecipada)",
+        "trg_baixa_estoque.prg (chamado 4412)"
+      ],
+      "cliente": "0003",
+      "itens": [
+        {
+          "codigoProduto": "0004",
+          "quantidade": 18
+        }
+      ],
+      "esperado": {
+        "cfop": "5102",
+        "valorBruto": 117.0,
+        "valorDesconto": 0,
+        "valorDescontoFuncionario": 0,
+        "valorIcms": 21.06,
+        "valorTotal": 117.0,
+        "itens": [
+          {
+            "item": 1,
+            "codigoProduto": "0004",
+            "percentualDesconto": 0,
+            "valorDesconto": 0,
+            "valorItem": 117.0,
+            "aliquotaIcms": 18,
+            "valorIcms": 21.06
+          }
+        ]
+      },
+      "estoque": {
+        "codigoProduto": "0004",
+        "estoqueInicial": 18,
+        "quantidadeVendida": 18,
+        "estoqueFinal": -1,
+        "aplicouQuebra": true,
+        "quantidadeSugerida": 49
+      }
+    },
+    {
+      "id": "PED-008",
+      "descricao": "Varejista SP, 12 arroz + 6 pães: totais somados, alíquotas diferentes por item, CFOP do cabeçalho pela UF.",
+      "fontes": [
+        "ped_inclui.prg",
+        "spc_calc_icms.prg"
+      ],
+      "cliente": "0001",
+      "itens": [
+        {
+          "codigoProduto": "0001",
+          "quantidade": 12
+        },
+        {
+          "codigoProduto": "0003",
+          "quantidade": 6
+        }
+      ],
+      "esperado": {
+        "cfop": "5102",
+        "valorBruto": 346.74,
+        "valorDesconto": 32.27,
+        "valorDescontoFuncionario": 0,
+        "valorIcms": 51.6,
+        "valorTotal": 314.47,
+        "itens": [
+          {
+            "item": 1,
+            "codigoProduto": "0001",
+            "percentualDesconto": 10,
+            "valorDesconto": 29.88,
+            "valorItem": 268.92,
+            "aliquotaIcms": 18,
+            "valorIcms": 48.41
+          },
+          {
+            "item": 2,
+            "codigoProduto": "0003",
+            "percentualDesconto": 5,
+            "valorDesconto": 2.39,
+            "valorItem": 45.55,
+            "aliquotaIcms": 7,
+            "valorIcms": 3.19
+          }
+        ]
+      }
+    }
+  ]
+}

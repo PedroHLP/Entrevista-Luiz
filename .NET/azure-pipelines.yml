@@ -1,0 +1,51 @@
+# Rastreabilidade da esteira: restore → build → teste (xUnit + Reqnroll + paridade).
+# Equivale, nesta demo, ao pipeline que o Azure DevOps rodaria no card da migração.
+
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: Release
+  solution: Gestcom.sln
+
+steps:
+  - task: UseDotNet@2
+    displayName: "Instalar SDK .NET 8"
+    inputs:
+      packageType: sdk
+      version: 8.0.x
+
+  - task: DotNetCoreCLI@2
+    displayName: "Restore"
+    inputs:
+      command: restore
+      projects: "$(solution)"
+
+  - task: DotNetCoreCLI@2
+    displayName: "Build"
+    inputs:
+      command: build
+      projects: "$(solution)"
+      arguments: "--configuration $(buildConfiguration) --no-restore"
+
+  - task: DotNetCoreCLI@2
+    displayName: "Testes (unidade, BDD e paridade com o legado)"
+    inputs:
+      command: test
+      projects: "$(solution)"
+      arguments: "--configuration $(buildConfiguration) --no-build --logger trx --collect:XPlat Code Coverage"
+
+  - task: PublishTestResults@2
+    displayName: "Publicar resultados no Azure DevOps"
+    condition: always()
+    inputs:
+      testResultsFormat: VSTest
+      testResultsFiles: "**/*.trx"
+      mergeTestResults: true
+      failTaskOnFailedTests: true

@@ -1,0 +1,17 @@
+---
+description: Convenções da migração Visual FoxPro → .NET do Gestcom
+globs:
+  - "**/*.cs"
+  - "**/*.prg"
+---
+
+# Migração do legado Gestcom
+
+- A fonte da verdade das regras é a pasta `Visual FoxPro/`, não a intuição do que “o sistema deveria fazer”.
+- Toda regra implementada no .NET deve citar o `.prg` de origem (rotina e, se possível, o chamado interno: 4412, 2281, circular 14/2012).
+- Paridade vem antes de melhoria. Se o legado arredonda, trunca, deixa estoque negativo ou calcula ICMS “a maior”, o .NET reproduz e documenta em `docs/regras-de-negocio.md` e `docs/decisoes.md`.
+- Atenção especial a rotinas com prefixo `spc_` e `trg_`: no legado elas funcionam como stored procedure e trigger e costumam esconder regras fora do manual.
+- Cálculo monetário usa `decimal` e os helpers de `ArredondamentoLegado` (`RoundGestcom`, `RoundIcms`, `Trunca2`, `RoundVfp`). É proibido `Math.Round(valor, 2)` sem `MidpointRounding.AwayFromZero`.
+- Não usar `double`/`float` para preço, quantidade, desconto ou imposto.
+- A validação de estoque acontece antes da baixa. A quebra de NCM 2202 acontece depois, na baixa, e não pode ser “corrigida” silenciosamente.
+- O desconto de funcionário é de cabeçalho e não recalcula ICMS.

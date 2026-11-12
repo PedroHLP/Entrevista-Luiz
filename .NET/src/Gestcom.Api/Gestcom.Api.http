@@ -1,0 +1,57 @@
+@base = http://localhost:5088
+
+### Saúde
+GET {{base}}/saude
+
+### Produtos (após a migração)
+GET {{base}}/api/produtos
+
+### Clientes
+GET {{base}}/api/clientes
+
+### Pedido demonstração: varejista SP compra 12 sacos de arroz (10% de desconto)
+POST {{base}}/api/pedidos
+Content-Type: application/json
+
+{
+  "codigoCliente": "0001",
+  "itens": [
+    { "codigoProduto": "0001", "quantidade": 12 }
+  ]
+}
+
+### Pedido demonstração: pão (NCM 1905, ICMS 7%) para o Paraná
+POST {{base}}/api/pedidos
+Content-Type: application/json
+
+{
+  "codigoCliente": "0002",
+  "itens": [
+    { "codigoProduto": "0003", "quantidade": 6 }
+  ]
+}
+
+### Pedido demonstração: refrigerante (quebra operacional + sugestão de reposição)
+POST {{base}}/api/pedidos
+Content-Type: application/json
+
+{
+  "codigoCliente": "0003",
+  "itens": [
+    { "codigoProduto": "0004", "quantidade": 5 }
+  ]
+}
+
+### Pedido demonstração: água (arredondamento 1,125 → 1,13)
+POST {{base}}/api/pedidos
+Content-Type: application/json
+
+{
+  "codigoCliente": "0003",
+  "itens": [
+    { "codigoProduto": "0006", "quantidade": 1 }
+  ]
+}
+
+### Sugestões de reposição
+GET {{base}}/api/reposicao

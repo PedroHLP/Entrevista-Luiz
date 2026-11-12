@@ -1,0 +1,17 @@
+---
+description: Como escrever especificações BDD (Reqnroll) desta migração
+globs:
+  - "**/*.feature"
+  - "**/StepDefinitions/**/*.cs"
+---
+
+# Especificações BDD
+
+- Arquivos `.feature` em português, com `# language: pt` na primeira linha.
+- Palavras-chave: Funcionalidade, Cenário, Dado, Quando, Então, E.
+- Cada cenário descreve um comportamento de negócio observável (valor, alíquota, estoque, CFOP), não um detalhe de infraestrutura.
+- O título do cenário deve permitir que o PO ou o dev do cliente reconheçam a regra (“trunca o desconto em 2,39”, “arredonda 1,125 para 1,13”).
+- Valores monetários em formato brasileiro (298,80) nos passos.
+- Toda particularidade não documentada (NCM 1905, quebra 2202, desconto de funcionário, arredondamento do meio) precisa de pelo menos um cenário explícito.
+- Bindings ficam em `tests/Gestcom.BddTests/StepDefinitions` e exercitam o domínio (`CalculadoraPedido`, `ProcessadorBaixaEstoque`), não o HTTP.
+- Cenário novo ⇒ linha nova em `docs/regras-de-negocio.md`.

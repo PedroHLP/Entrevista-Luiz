@@ -1,0 +1,15 @@
+bin/
+obj/
+.vs/
+.idea/
+*.user
+*.suo
+gestcom.db
+gestcom.db-shm
+gestcom.db-wal
+TestResults/
+coverage/
+*.trx
+node_modules/
+dist/
+.vite/

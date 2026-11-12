@@ -1,0 +1,14 @@
+---
+description: Nomenclatura em português (negócio) e inglês (técnico)
+globs:
+  - "**/*.cs"
+---
+
+# Nomenclatura
+
+- **Negócio** em português, alinhado ao legado: `Pedido`, `ItemPedido`, `EstoqueMinimo`, `ValorIcms`, `SugestaoReposicao`, `AliquotaIcms`.
+- **Tabelas e colunas** mantêm os nomes das DBFs: `PRODUTOS`, `CODPROD`, `ESTMIN`, `ITEMPED`, `SUGREPOS`. Isso deixa a migração de dados explícita.
+- **Infraestrutura / padrão da linguagem** pode ficar em inglês quando for tipo do framework (`DbContext`, `Controller`, `HttpPost`, `IServiceCollection`). Os nossos adaptadores, porém, seguem o português do restante (`ProdutoRepositorio`, `PedidoServico`).
+- Não traduzir código de produto, CFOP, NCM nem UF.
+- Tipos de cliente: enum `TipoCliente` com códigos `C`, `V`, `F` iguais ao campo `CLIENTES.TIPO`.
+- Evitar abreviações do VFP no C# (`nVlrDesc`, `cUF`). No FoxPro elas permanecem, porque o arquivo é legado autêntico.
